@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminScol.Migrations
 {
     [DbContext(typeof(AdminScolDbContext))]
-    partial class AdminScolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230615190911_SecondTwo")]
+    partial class SecondTwo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,29 +102,6 @@ namespace AdminScol.Migrations
                     b.ToTable("Cours");
                 });
 
-            modelBuilder.Entity("AdminScol.Models.CourProfesseur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfesseurId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourId");
-
-                    b.HasIndex("ProfesseurId");
-
-                    b.ToTable("CourProfesseur");
-                });
-
             modelBuilder.Entity("AdminScol.Models.Etudiant", b =>
                 {
                     b.Property<int>("Id")
@@ -174,37 +154,6 @@ namespace AdminScol.Migrations
                     b.ToTable("Etudiants");
                 });
 
-            modelBuilder.Entity("AdminScol.Models.Professeur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Adresse")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prenom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sexe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Professeur");
-                });
-
             modelBuilder.Entity("AdminScol.Models.Classe", b =>
                 {
                     b.HasOne("AdminScol.Models.AnneeAcademique", "AnneeAcademique")
@@ -231,25 +180,6 @@ namespace AdminScol.Migrations
                     b.Navigation("Classe");
                 });
 
-            modelBuilder.Entity("AdminScol.Models.CourProfesseur", b =>
-                {
-                    b.HasOne("AdminScol.Models.Cour", "Cour")
-                        .WithMany("CourProfesseurs")
-                        .HasForeignKey("CourId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AdminScol.Models.Professeur", "Professeur")
-                        .WithMany("CourProfesseurs")
-                        .HasForeignKey("ProfesseurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cour");
-
-                    b.Navigation("Professeur");
-                });
-
             modelBuilder.Entity("AdminScol.Models.Etudiant", b =>
                 {
                     b.HasOne("AdminScol.Models.Classe", "Classe")
@@ -271,19 +201,9 @@ namespace AdminScol.Migrations
                     b.Navigation("Cours");
                 });
 
-            modelBuilder.Entity("AdminScol.Models.Cour", b =>
-                {
-                    b.Navigation("CourProfesseurs");
-                });
-
             modelBuilder.Entity("AdminScol.Models.Etudiant", b =>
                 {
                     b.Navigation("Classes");
-                });
-
-            modelBuilder.Entity("AdminScol.Models.Professeur", b =>
-                {
-                    b.Navigation("CourProfesseurs");
                 });
 #pragma warning restore 612, 618
         }

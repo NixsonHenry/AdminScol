@@ -14,5 +14,8 @@ namespace AdminScol.Models
         public int AnneeAcademiqueId { get; set; }
 
         public AnneeAcademique? AnneeAcademique { get; set; }
+
+        public List<Cour>? Cours { get; set; } // Navigation property for the one-to-many relationship
+
     }
 }
